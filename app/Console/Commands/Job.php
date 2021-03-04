@@ -14,14 +14,14 @@ class Job extends Command
      *
      * @var string
      */
-    protected $signature = 'job:getdata';
+    protected $signature = 'job:getdata {resource=Payments to Suppliers - 2011/2012}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Get data';
+    protected $description = 'Get data from 3rd Party API';
 
     /**
      * Create a new command instance.
@@ -41,6 +41,7 @@ class Job extends Command
     public function handle()
     {
         
+        $resourceName = $this->argument('resource');
         
         $response = Http::get('https://ckan.publishing.service.gov.uk/api/action/package_show?id=all-payments-to-suppliers');
 
@@ -48,15 +49,12 @@ class Job extends Command
         
         foreach($resources as $resource){
         
-            if($resource['name'] == 'Payments to Suppliers - 2011/2012'){
+            if($resource['name'] == $resourceName){
         
                 $resourceUrl = $resource['url'];
             
-                /**
-                 * function assignFilename is a custom fuction declared into helpers.php file
-                 * the file can be found on 'app' folder
-                 */
-
+                //generate an unique filename
+                
                 $filename = assignFilename();
         
                 $myFile = fopen($filename, 'w') or die('There\'s an error creating the file');
