@@ -38,6 +38,6 @@ The files are being saved on 'storage/app/YEAR/MONTH/DAY' folder.
 ## Data
 Data is being saved into the 'Payments' table
 
-##What can be/was improved?
+## What can be/was improved?
 
 - the resource name 'Payments to Suppliers - 2011/2012' is the default value of the argument called 'resource'. Other desired value can be filled.
