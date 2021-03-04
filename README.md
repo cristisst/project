@@ -29,3 +29,9 @@ php artisan migrate:fresh
 ```sh
 path/to/php artisan job:getdata
 ```
+
+## Local storage
+The files are being saved on 'storage/app/YEAR/MONTH/DAY' folder.
+
+## Data
+Data is being saved into the 'Payments' table
