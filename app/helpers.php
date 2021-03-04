@@ -5,7 +5,14 @@
 
 use Illuminate\Support\Facades\Storage; 
 
-function readCSV($csvFile, $delimiter){
+
+/**
+ * Read a CSV file
+ * @param $filename
+ * @param $delimiter (default ',')
+ * @return Array
+ */
+function readCSV($csvFile, $delimiter = ','){
 
     $file_handle = fopen($csvFile, 'r');
     
@@ -23,6 +30,11 @@ function readCSV($csvFile, $delimiter){
     fclose($file_handle);
     return $line_of_text;
 }
+
+/**
+ * Create folder structure and generate filename
+ * @return string
+ */
 
 function assignFilename(){
 	//Year in YYYY format.

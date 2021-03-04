@@ -51,16 +51,27 @@ class Job extends Command
             if($resource['name'] == 'Payments to Suppliers - 2011/2012'){
         
                 $resourceUrl = $resource['url'];
-        
+            
+                /**
+                 * function assignFilename is a custom fuction declared into helpers.php file
+                 * the file can be found on 'app' folder
+                 */
+
                 $filename = assignFilename();
         
                 $myFile = fopen($filename, 'w') or die('There\'s an error creating the file');
+
+                //get the contents of the remote file and save to local file
         
                 $resourceResponse = Http::get($resourceUrl)->getBody()->getContents();
         
                 fwrite($myFile, $resourceResponse);
         
                 fclose($myFile);
+
+                /**
+                 * Parse the CSV file
+                 */
         
                 $this->parseCSV($filename);
 
@@ -70,19 +81,24 @@ class Job extends Command
     }
 
     public function parseCSV($filename){
+
+        /**
+         * reading the CSV file and converting it to an array
+         */
         $csvArray = readCSV($filename, ',');
         foreach($csvArray as $line){
+
+            //check if the line read is an array
             if(is_array($line)){
 
+                //checking the date format is d/m/Y
                 if(preg_match("/(\d{2})\/(\d{2})\/(\d{4})$/", $line[4])){
                     $parseDate = Carbon::createFromFormat('d/m/Y', $line[4]);
                 } else {
                     $parseDate = NULL;
                 }
                 
-                
-
-                
+                //saving the data into the DB
                 $payment = Payments::create([
                     'body_name'         =>  $line[0],
                     'organisation_unit' =>  $line[1],
